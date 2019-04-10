@@ -18,4 +18,24 @@ describe('<Controls />', () => {
         getByText('Lock Gate', { selector: 'button.toggle-btn' });
         getByText('Close Gate', { selector: 'button.toggle-btn' });
     });
+
+    it('renders the button to unlock the gate', () => {
+        const { getByText } = render(<Controls locked={true} />);
+        getByText('Unlock Gate');
+    });
+
+    it('renders the button to lock the gate', () => {
+        const { getByText } = render(<Controls locked={false} />);
+        getByText('Lock Gate');
+    });
+
+    it('renders the button to open the gate', () => {
+        const { getByText } = render(<Controls closed={true} />);
+        getByText('Open Gate');
+    });
+
+    it('renders the button to close the gate', () => {
+        const { getByText } = render(<Controls closed={false} />);
+        getByText('Close Gate');
+    });
 });
