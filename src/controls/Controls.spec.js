@@ -38,4 +38,14 @@ describe('<Controls />', () => {
         const { getByText } = render(<Controls closed={false} />);
         getByText('Close Gate');
     });
+
+    it('keeps the close toggle button disabled when the gate is closed', () => {
+        const { getByText } = render(<Controls locked={true} />);
+        expect(getByText('Close Gate', { selector: 'button.toggle-btn' }).disabled).toBe(true);
+    });
+
+    it('keeps the unlock gate toggle button disabled when the gate is open', () => {
+        const { getByText } = render(<Controls closed={false} />);
+        expect(getByText('Unlock Gate', { selector: 'button.toggle-btn' }).disabled).toBe(true);
+    });
 });
