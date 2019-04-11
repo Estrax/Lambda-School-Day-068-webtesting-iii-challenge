@@ -2,7 +2,7 @@
 import React from 'react';
 import { render, cleanup } from 'react-testing-library';
 import 'jest-dom/extend-expect';
-
+import renderer from 'react-test-renderer';
 import Display from './Display';
 
 afterEach(cleanup);
@@ -17,6 +17,11 @@ describe('<Display />', () => {
         getByText('', { selector: 'div.display' });
         getByText('Unlocked', { selector: 'div.led' });
         getByText('Open', { selector: 'div.led' });
+    });
+
+    it('matches the snapshot', () => {
+        const tree = renderer.create(<Display />)
+        expect(tree.toJSON()).toMatchSnapshot();
     });
 
     it('displays appropriate values with the default state', () => {

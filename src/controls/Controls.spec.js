@@ -2,6 +2,7 @@
 import React from 'react';
 import { render, cleanup } from 'react-testing-library';
 import 'jest-dom/extend-expect';
+import renderer from 'react-test-renderer';
 
 import Controls from './Controls';
 
@@ -17,6 +18,11 @@ describe('<Controls />', () => {
         getByText('', { selector: 'div.controls' });
         getByText('Lock Gate', { selector: 'button.toggle-btn' });
         getByText('Close Gate', { selector: 'button.toggle-btn' });
+    });
+
+    it('matches the snapshot', () => {
+        const tree = renderer.create(<Controls />)
+        expect(tree.toJSON()).toMatchSnapshot();
     });
 
     it('renders the button to unlock the gate', () => {
@@ -42,10 +48,5 @@ describe('<Controls />', () => {
     it('keeps the close toggle button disabled when the gate is closed', () => {
         const { getByText } = render(<Controls locked={true} />);
         expect(getByText('Close Gate', { selector: 'button.toggle-btn' }).disabled).toBe(true);
-    });
-
-    it('keeps the unlock gate toggle button disabled when the gate is open', () => {
-        const { getByText } = render(<Controls closed={false} />);
-        expect(getByText('Unlock Gate', { selector: 'button.toggle-btn' }).disabled).toBe(true);
     });
 });
